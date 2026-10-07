@@ -1,0 +1,97 @@
+const prompt = require('prompt-sync')();
+let grades = [];
+
+function addGrade() {
+    let userInput = prompt("Enter a grade to add: ");
+    let grade = Number(userInput);
+
+    if (isNaN(grade) || grade < 0 || grade > 100) {
+        console.log("Invalid Grade. Must be between 0 and 100");
+        return;
+    }
+
+    grades.push(grade);
+    console.log("Grade added successfully");
+    console.log("Current grades:", grades);
+}
+
+function removeGrade() {
+    let userInput = prompt("Enter a grade to remove: ");
+    let grade = Number(userInput);
+
+    if (isNaN(grade) || grade < 0 || grade > 100) {
+        console.log("Invalid Grade. Must be between 0 and 100");
+        return;
+    }
+
+    let index = grades.indexOf(grade);
+
+    if (index === -1) {
+        console.log("Grade does not exist");
+    } else {
+        grades.splice(index, 1);
+        console.log("Grade removed");
+        console.log("Current grades:", grades);
+    }
+}
+
+function menu() {
+    let choice = "";
+
+    while (choice !== "6") {
+        console.log("\nStudent Grade Manager");
+        console.log("1. Add Grade");
+        console.log("2. Remove Grade");
+        console.log("3. GPA")
+        console.log("4. Highest Grade")
+        console.log("5. Print grades")
+        console.log("6. Exit");
+
+        choice = prompt("Enter your choice: ");
+
+        if (choice === "1") {
+            addGrade();
+        } else if (choice === "2") {
+            removeGrade();
+        }else if (choice === "3"){
+            averageGrade()
+        }else if (choice === "4"){
+            highestGrade()
+        }else if(choice === "5"){
+            printGrades()
+        }else if (choice === "6"){
+            console.log("Exiting...");
+        }else {
+            console.log("Invalid choice. Try again.");
+        }
+    }
+}
+
+function averageGrade(){
+    if(grades.length === 0){
+        console.log("there is not grades avalable")
+        return;
+    }
+    let sum = 0;
+    for(let i = 0; i <grades.length;i++){
+        sum+= grades[i];
+    }
+    let average = sum/ grades.length;
+    console.log("Average grade:", average.toFixed(2));
+}
+function highestGrade(){
+console.log("Highest grade:", Math.max(...grades));
+}
+
+function printGrades(){
+    if(grades.length === 0){
+        console.log("there is not grades avalable")
+        return;
+    }
+    console.log("All grades")
+    for(let i = 0; i<grades.length; i++){
+        console.log(grades[i]);
+    }
+}
+menu();
+
